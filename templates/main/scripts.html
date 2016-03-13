@@ -1,0 +1,98 @@
+{% load staticfiles %}
+<!-- jQuery 2.1.4 -->
+<script src="{% static 'base/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<!-- JQuery UI -->
+<script src="{% static 'base/plugins/jQueryUI/jquery-ui.min.js' %}"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="{% static 'base/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'base/plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'base/plugins/fastclick/fastclick.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'base/dist/js/app.min.js' %}"></script>
+<!-- Toastr messages -->
+<link href="{% static 'base/toastr/toastr.css' %}" rel="stylesheet"/>
+<script src="{% static 'base/toastr/toastr.min.js' %}"></script>
+<script>
+function getCookie(c_name) {
+    if(document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+            if(c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if(c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+    }
+    return "";
+}
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
+
+
+function callAPI(method, url, apiData, success, error) {
+
+    toastr.options = {
+        "positionClass": "toast-bottom-right",
+    }
+
+    if(method === 'POST') {
+
+        $.ajax({
+                type: method,
+                url: url,
+                data: JSON.stringify(apiData),
+                success: function() { success(); },
+                error: function() { error(); },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                crossDomain:false,
+                beforeSend: function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); }
+            });
+
+    }
+
+    if(method === 'GET') {
+
+        $.ajax({
+                type: method,
+                url: url,
+                success: function(data) { success(data);},
+                error: function(result) { error(); },
+                contentType: "application/json; charset=utf-8",
+                crossDomain:false,
+                beforeSend: function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); }
+            });
+
+    }
+
+    if(method === 'PUT') {
+
+        $.ajax({
+          url: url,
+          type: method,
+          data: JSON.stringify(apiData),
+          success: function() { success(); },
+          error: function() { error(); },
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          crossDomain:false,
+          beforeSend: function(xhr, settings) { xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));}
+
+        });
+
+    }
+
+    // DELETE
+
+}
+
+function reloadPage() {
+    location.reload();
+}
+
+</script>

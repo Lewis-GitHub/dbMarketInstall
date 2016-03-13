@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+
+{% include "main/head.html" %}
+
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="{{ organization_web_url }}">
+            <b>Inside</b>Information
+            <img src="{% static 'img/insideinfo/logo.png' %}" style="width:64px;height:64px;">
+        </a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to continue</p>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group has-feedback">
+                {{ form.username }}
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                {{ form.password }}
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12">
+                    {% if registration_page == 'True' %}
+                    <a href="{% url 'register' %}">New users register here</a>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+{% include "main/scripts.html" %}
+
+</body>
+</html>

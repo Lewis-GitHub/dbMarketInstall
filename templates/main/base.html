@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+{% load static %}
+{% get_media_prefix as MEDIA_URL %}
+{% include "main/head.html" %}
+<body class="skin-blue sidebar-mini hold-transition">
+<!-- Site wrapper -->
+<div class="wrapper">
+    {% include "main/header.html" %}
+    <!-- =============================================== -->
+    {% include "main/sidebar.html" %}
+    <!-- =============================================== -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </div><!-- /.content-wrapper -->
+    {% include "main/footer.html" %}
+</div><!-- ./wrapper -->
+{% include "main/scripts.html" %}
+</body>
+</html>
